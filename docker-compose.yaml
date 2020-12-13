@@ -2,7 +2,7 @@ version: '3.3'
 services:
   mysql:
     image: mysql
-    container_name: demo-spring-mvc-mysql
+    container_name: OlimpiadiInfiniteMVC-mysql
     ports:
     - 3306:3306
     environment:

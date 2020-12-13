@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Registrazione</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	$("#form").submit(function( event ) {
+    		var messaggioErrore = "";
+    	  if ( $( "#username" ).val() == "" || $( "#username" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo USERNAME obbligatorio!\n";
+      	  }
+    	  if ( $( "#password" ).val() == "" || $( "#password" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo PASSWORD obbligatorio!\n";
+          }
+    	  if ( $( "#repeatePassword" ).val() == "" || $( "#repeatePassword" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo REPEATE PASSWORD obbligatorio!\n";
+          }
+    	  if(messaggioErrore != ""){
+    		  alert(messaggioErrore);
+    		  event.preventDefault();
+      	  	  return;
+    	  }
+    	});
+    });
+    </script> -->
+</head>
+<body>
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Registrati</h5> 
+		    </div>
+		    <div class='card-body'>
+					<form id="form" action="#" th:action="@{/auth/registrazione}" method="post" th:object="${utenteRegistratoModel}" novalidate="novalidate">
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label>Nome</label>
+								<input type="text" class="form-control" th:field="*{nome}" id="nome" placeholder="Inserire il nome" required>
+								<p style="color:red" th:if="${#fields.hasErrors('nome')}" th:errors="*{nome}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Cognome</label>
+								<input type="text" class="form-control" th:field="*{cognome}" id="cognome" placeholder="Inserire il cognome" required>
+								<p style="color:red" th:if="${#fields.hasErrors('cognome')}" th:errors="*{cognome}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Codice Fiscale</label>
+								<input type="text" class="form-control" th:field="*{codiceFiscale}" id="codiceFiscale" placeholder="Inserire il codice fiscale" required>
+								<p style="color:red" th:if="${#fields.hasErrors('codiceFiscale')}" th:errors="*{codiceFiscale}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Username</label>
+								<input type="text" class="form-control" th:field="*{username}" id="username" placeholder="Inserire l'username" required>
+								<p style="color:red" th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Password</label>
+								<input type="password" class="form-control" th:field="*{password}" id="password" placeholder="Inserire la password" required>
+								<p style="color:red" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Ruolo</label>
+								<select class="form-control" th:field="*{ruolo}" id = "ruolo">
+									<option value="">Seleziona Ruolo</option>
+    								<option th:each = "ruolo : ${listaRuoli}" th:value="${ruolo}" th:text="${ruolo}"></option>
+								</select>
+								<p style="color:red" th:if="${#fields.hasErrors('ruolo')}" th:errors="*{ruolo}"></p>
+							</div>
+						</div>
+						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-danger">Registrami!</button>
+						<a style = "color: red" class="nav-link" th:href="@{/auth/login}">...Torna alla log in <span class="sr-only">(current)</span></a>
+					</form>
+			<!-- end card-body -->			   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>
