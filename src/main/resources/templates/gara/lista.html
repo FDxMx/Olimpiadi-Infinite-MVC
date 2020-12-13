@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Cerca Gara</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+</head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+<body>
+	<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Cerca una gara</h5> 
+		    </div>
+		    <div class='card-body'>
+					<form id="form" action="#" th:action="@{/gara/list}" th:object="${garaSearchModel}" novalidate="novalidate">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label>Data</label>
+								<input type="date" th:field="*{data}" id="data" class="form-control" placeholder="Inserire la data" required>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Punteggio</label>
+								<input type="number" class="form-control" th:field="*{punteggio}" id="punteggio" placeholder="Inserire il punteggio" required>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Stato</label>
+								<select class="form-control" th:field="*{stato}">
+									<option value="">Seleziona stato</option>
+    								<option th:each = "stato : ${listaStati}" th:value="${stato}" th:text="${stato}"></option>
+								</select>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Disciplina</label>
+								<select class="form-control" th:field="*{disciplinaDto}">
+									<option value="">Seleziona disciplina</option>
+    								<option th:each = "disciplina : ${listaDiscipline}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								</select>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Organizzatore</label>
+								<select class="form-control" th:field="*{organizzatoreDto}">
+									<option value="">Seleziona organizzatore</option>
+    								<option th:each = "organizzatore : ${listaOrganizzatori}" th:value="${organizzatore.id}" th:text="${organizzatore.nome}"></option>
+								</select>
+							</div>
+						</div>
+						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-danger">Cerca!</button>
+					</form>
+			<!-- end card-body -->
+			&nbsp;
+			&nbsp;				
+			<h5>Gare</h5>
+			<a class="btn-sm btn-danger" th:href="@{/gara/insert}">Crea gara</a>
+			
+				<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>ID</th>
+       				 			<th>Data</th>
+        						<th>Punteggio</th>
+        						<th>Stato</th>
+        						<th>Disciplina</th>
+        						<th>Organizzatore</th>
+       						 	<th>Azioni</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr th:each="gara : ${listaGare}">
+        						<td th:text="${gara.id}"></td>
+        						<td th:text="${gara.data}"></td>
+        						<td th:text="${gara.punteggio}"></td>
+        						<td th:text="${gara.stato}"></td>
+        						<td th:text="${gara.disciplinaDto.nome}"></td>
+        						<td th:text="${gara.utenteDto.nome}"></td>
+        						<td><a class="btn  btn-sm btn-outline-secondary"
+									th:href="@{/gara/show/{garaId}(garaId=${gara.id})}">Dettagli</a>
+									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
+									th:href="@{/gara/update/{garaId}(garaId=${gara.id})}">Aggiorna</a>
+									<a class="btn btn-outline-danger btn-sm"
+									th:href="@{/gara/delete/{garaId}(garaId=${gara.id})}">Elimina</a>
+								</td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>

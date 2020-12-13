@@ -30,6 +30,11 @@ public class AuthController {
         return "/auth/login";
     }
 	
+	@GetMapping("home")
+    public String home(Model model) {
+        return "home";
+    }
+	
 	@GetMapping("registrazione")
     public String registrazione(Model model) {
         model.addAttribute("utenteRegistratoModel", new UtenteRegistrazioneMessageDto());
