@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Dettagli Gara</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+</head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+<body>
+	<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Dettagli gara</h5> 
+		    </div>
+		    <div class='card-body'>
+					<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>ID</th>
+       				 			<th>Data</th>
+        						<th>Punteggio</th>
+        						<th>N° partecipanti</th>
+        						<th>Stato</th>
+        						<th>Disciplina</th>
+        						<th>Organizzatore</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr>
+        						<td th:text="${garaShowModel.id}"></td>
+        						<td th:text="${garaShowModel.data}"></td>
+        						<td th:text="${garaShowModel.punteggio}"></td>
+        						<td th:text="${garaShowModel.numeroPartecipanti}"></td>
+        						<td th:text="${garaShowModel.stato}"></td>
+        						<td th:text="${garaShowModel.disciplinaDto.nome}"></td>
+        						<td th:text="${garaShowModel.organizzatoreDto.nome}"></td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>
+			<!-- end card-body -->
+			&nbsp;
+			&nbsp;				
+			<h5>Partecipanti gara</h5>
+			
+				<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Nome</th>
+        						<th>Cognome</th>
+        						<th>Codice Fiscale</th>
+        						<th>Punti</th>
+        						<th>Rappresentante</th>
+        						<th>Stato</th>
+       						 	<th>Azioni</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr th:each="atleta : ${listaPartecipanti}">
+        						<td th:text="${atleta.id}"></td>
+        						<td th:text="${atleta.nome}"></td>
+        						<td th:text="${atleta.cognome}"></td>
+        						<td th:text="${atleta.codiceFiscale}"></td>
+        						<td th:text="${atleta.punti}"></td>
+        						<td th:text="${atleta.rappresentanteNazionale.nome}"></td>
+        						<td th:text="${atleta.stato}"></td>
+        						<td><a class="btn  btn-sm btn-outline-secondary"
+									th:href="@{/gara/abilita-ritira/{atletaId}(atletaId=${atleta.id})}">Abilita/Ritira</a>
+								</td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>

@@ -17,6 +17,7 @@ import org.springframework.stereotype.Service;
 import it.olimpiadimvc.dto.GaraDto;
 import it.olimpiadimvc.dto.messages.GaraInsertMessageDto;
 import it.olimpiadimvc.dto.messages.GaraSearchMessageDto;
+import it.olimpiadimvc.dto.messages.GaraUpdateMessageDto;
 import it.olimpiadimvc.mapper.GaraMapper;
 import it.olimpiadimvc.model.Gara;
 import it.olimpiadimvc.model.StatoGara;
@@ -87,6 +88,22 @@ public class GaraService {
 		gara.setStato(StatoGara.CREATA);
 		gara.setOrganizzatore(utenteRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		garaRepository.save(gara);
+	}
+	
+	public GaraDto findById(Integer id) {
+		return garaMapper.convertEntityToDto(garaRepository.findById(id).get());
+	}
+	
+	public void update(GaraUpdateMessageDto garaUpdateMessageDto) {
+		Gara gara = garaRepository.findById(Integer.parseInt(garaUpdateMessageDto.getId())).get();
+		gara.setData(garaUpdateMessageDto.getData() != null && !garaUpdateMessageDto.getData().equals("") ? LocalDate.parse(garaUpdateMessageDto.getData()) : null);
+		gara.setPunteggio(Integer.parseInt(garaUpdateMessageDto.getPunteggio()));
+		gara.setNumeroPartecipanti(Integer.parseInt(garaUpdateMessageDto.getNumeroPartecipanti()));
+		garaRepository.save(gara);
+	}
+	
+	public void delete(Integer id) {
+		garaRepository.deleteById(id);
 	}
 
 }

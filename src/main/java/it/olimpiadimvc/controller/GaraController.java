@@ -10,17 +10,21 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import it.olimpiadimvc.dto.GaraDto;
 import it.olimpiadimvc.dto.messages.GaraInsertMessageDto;
 import it.olimpiadimvc.dto.messages.GaraSearchMessageDto;
+import it.olimpiadimvc.dto.messages.GaraUpdateMessageDto;
 import it.olimpiadimvc.model.StatoGara;
+import it.olimpiadimvc.service.AtletaService;
 import it.olimpiadimvc.service.DisciplinaService;
 import it.olimpiadimvc.service.GaraService;
 import it.olimpiadimvc.service.UtenteService;
 import it.olimpiadimvc.validators.GaraInsertValidator;
+import it.olimpiadimvc.validators.GaraUpdateValidator;
 
 @Controller
 @RequestMapping("gara")
@@ -37,6 +41,12 @@ public class GaraController {
 	
 	@Autowired
 	private GaraInsertValidator garaInsertValidator;
+	
+	@Autowired
+	private GaraUpdateValidator garaUpdateValidator;
+	
+	@Autowired
+	private AtletaService atletaService;
 	
 	@GetMapping("list")
     public String list(GaraSearchMessageDto garaSearchMessageDto, Model model) {
@@ -69,5 +79,56 @@ public class GaraController {
             return "redirect:/gara/list";
         }
 	}
+	
+	@GetMapping("show/{id}")
+	public String show(@PathVariable Integer id, Model model) {
+		model.addAttribute("garaShowModel", garaService.findById(id));
+		model.addAttribute("listaPartecipanti", atletaService.findAtletiByGara(id));
+    	return "/gara/show";
+	}
+	
+	@GetMapping("update/{id}")
+	public String update(@PathVariable Integer id, Model model) {
+		GaraDto garaDto =  garaService.findById(id);
+		if(!garaDto.getStato().equals("TERMINATA")) {
+			model.addAttribute("garaUpdateModel", garaDto);
+	    	return "/gara/update";
+		} else {
+			model.addAttribute("erroreGara", "La gara è terminata!");
+			return "redirect:/gara/list";
+		}
+		
+	}
+	
+	@PostMapping("update/{id}")
+	public String update(@Valid @ModelAttribute("garaUpdateModel") GaraUpdateMessageDto garaUpdateMessageDto, BindingResult bindingResult, Model model) {
+		
+		garaUpdateValidator.validate(garaUpdateMessageDto, bindingResult);
+		
+		if (bindingResult.hasErrors()) {
+            return "/gara/update";
+        } else {
+            garaService.update(garaUpdateMessageDto);
+            return "redirect:/gara/list";
+        }
+	}
+	
+	@GetMapping("delete/{id}")
+	public String delete(@PathVariable Integer id, Model model) {
+		GaraDto garaDto =  garaService.findById(id);
+		if(!garaDto.getStato().equals("TERMINATA")) {
+			model.addAttribute("garaDeleteModelId", id);
+	    	return "/gara/delete";
+		}else {
+			model.addAttribute("erroreGara", "La gara è terminata!");
+			return "redirect:/gara/list";
+		}
+	}
+	
+	@GetMapping("confermaDelete/{id}")
+    public String delete(@PathVariable Integer id) {
+    	garaService.delete(id);
+    	return "redirect:/gara/list";
+    }
 
 }

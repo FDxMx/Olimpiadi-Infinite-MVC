@@ -29,10 +29,10 @@ public class GaraInsertValidator implements Validator{
 			}
 		}
 		if(!StringUtils.isNumeric(garaInsertMessageDto.getNumeroPartecipanti()) || Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()) < 4 || Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()) > 8) {
-			error.rejectValue("numeroPartecipanti", "", "Campo non vaido");
+			error.rejectValue("numeroPartecipanti", "", "Deve essere un numero compreso tra 4 e 8");
 		}
 		if(!StringUtils.isNumeric(garaInsertMessageDto.getPunteggio())) {
-			error.rejectValue("punteggio", "", "Non è un numero");
+			error.rejectValue("punteggio", "", "Deve essere un numero");
 		}
 	}
 
