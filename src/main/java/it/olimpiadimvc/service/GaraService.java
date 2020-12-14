@@ -11,22 +11,36 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import it.olimpiadimvc.dto.GaraDto;
+import it.olimpiadimvc.dto.messages.GaraInsertMessageDto;
 import it.olimpiadimvc.dto.messages.GaraSearchMessageDto;
 import it.olimpiadimvc.mapper.GaraMapper;
 import it.olimpiadimvc.model.Gara;
 import it.olimpiadimvc.model.StatoGara;
+import it.olimpiadimvc.repository.DisciplinaRepository;
+import it.olimpiadimvc.repository.GaraRepository;
+import it.olimpiadimvc.repository.UtenteRepository;
 
 @Service
 public class GaraService {
+	
+	@Autowired
+	private GaraRepository garaRepository;
 	
 	@Autowired
 	private GaraMapper garaMapper;
 	
 	@Autowired
     private EntityManager entityManager;
+	
+	@Autowired
+	private DisciplinaRepository disciplinaRepository;
+	
+	@Autowired
+	private UtenteRepository utenteRepository;
 	
 	public List<GaraDto> findByExample(GaraSearchMessageDto garaSearchMessageDto){
 		
@@ -41,7 +55,11 @@ public class GaraService {
 	        }
 
 	        if (garaSearchMessageDto.getPunteggio() != null && !garaSearchMessageDto.getPunteggio().equals("")) {
-	            predicates.add(cb.like(gara.get("punteggio"), "%" + Integer.parseInt(garaSearchMessageDto.getPunteggio()) + "%"));
+	            predicates.add(cb.equal(gara.get("punteggio"), Integer.parseInt(garaSearchMessageDto.getPunteggio())));
+	        }
+	        
+	        if (garaSearchMessageDto.getNumeroPartecipanti() != null && !garaSearchMessageDto.getNumeroPartecipanti().equals("")) {
+	            predicates.add(cb.equal(gara.get("numeroPartecipanti"), Integer.parseInt(garaSearchMessageDto.getNumeroPartecipanti())));
 	        }
 
 	        if (garaSearchMessageDto.getStato() != null && !garaSearchMessageDto.getStato().equals("")) {
@@ -58,6 +76,17 @@ public class GaraService {
 
 	        cq.where(predicates.toArray(new Predicate[0]));
 	        return garaMapper.convertEntityToDto(entityManager.createQuery(cq).getResultList());
+	}
+	
+	public void insert(GaraInsertMessageDto garaInsertMessageDto) {
+		Gara gara = new Gara();
+		gara.setData(garaInsertMessageDto.getData() != null && !garaInsertMessageDto.getData().equals("") ? LocalDate.parse(garaInsertMessageDto.getData()) : null);
+		gara.setPunteggio(Integer.parseInt(garaInsertMessageDto.getPunteggio()));
+		gara.setNumeroPartecipanti(Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()));
+		gara.setDisciplina(disciplinaRepository.findById(Integer.parseInt(garaInsertMessageDto.getDisciplinaDto())).get());
+		gara.setStato(StatoGara.CREATA);
+		gara.setOrganizzatore(utenteRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
+		garaRepository.save(gara);
 	}
 
 }

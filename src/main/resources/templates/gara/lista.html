@@ -34,6 +34,10 @@
 								<input type="number" class="form-control" th:field="*{punteggio}" id="punteggio" placeholder="Inserire il punteggio" required>
 							</div>
 							<div class="form-group col-md-3">
+								<label>N° partecipanti</label>
+								<input type="number" class="form-control" th:field="*{numeroPartecipanti}" id="numeroPartecipanti" placeholder="Inserire il numero di partecipanti" required>
+							</div>
+							<div class="form-group col-md-3">
 								<label>Stato</label>
 								<select class="form-control" th:field="*{stato}">
 									<option value="">Seleziona stato</option>
@@ -55,13 +59,13 @@
 								</select>
 							</div>
 						</div>
-						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-danger">Cerca!</button>
+						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-success">Cerca!</button>
 					</form>
 			<!-- end card-body -->
 			&nbsp;
 			&nbsp;				
 			<h5>Gare</h5>
-			<a class="btn-sm btn-danger" th:href="@{/gara/insert}">Crea gara</a>
+			<a class="btn-sm btn-success" th:href="@{/gara/insert}">Crea gara</a>
 			
 				<div class='table-responsive'>
 					<table class='table table-striped '>
@@ -70,6 +74,7 @@
         						<th>ID</th>
        				 			<th>Data</th>
         						<th>Punteggio</th>
+        						<th>N° partecipanti</th>
         						<th>Stato</th>
         						<th>Disciplina</th>
         						<th>Organizzatore</th>
@@ -81,9 +86,10 @@
         						<td th:text="${gara.id}"></td>
         						<td th:text="${gara.data}"></td>
         						<td th:text="${gara.punteggio}"></td>
+        						<td th:text="${gara.numeroPartecipanti}"></td>
         						<td th:text="${gara.stato}"></td>
         						<td th:text="${gara.disciplinaDto.nome}"></td>
-        						<td th:text="${gara.utenteDto.nome}"></td>
+        						<td th:text="${gara.organizzatoreDto.nome}"></td>
         						<td><a class="btn  btn-sm btn-outline-secondary"
 									th:href="@{/gara/show/{garaId}(garaId=${gara.id})}">Dettagli</a>
 									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"

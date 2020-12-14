@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Crea gara</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    	$("#form").submit(function( event ) {
+    		var messaggioErrore = "";
+    	  if ( $( "#username" ).val() == "" || $( "#username" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo USERNAME obbligatorio!\n";
+      	  }
+    	  if ( $( "#password" ).val() == "" || $( "#password" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo PASSWORD obbligatorio!\n";
+          }
+    	  if ( $( "#repeatePassword" ).val() == "" || $( "#repeatePassword" ).val() == null){
+    		  messaggioErrore = messaggioErrore + "Campo REPEATE PASSWORD obbligatorio!\n";
+          }
+    	  if(messaggioErrore != ""){
+    		  alert(messaggioErrore);
+    		  event.preventDefault();
+      	  	  return;
+    	  }
+    	});
+    });
+    </script> -->
+</head>
+<body>
+<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Crea una gara</h5> 
+		    </div>
+		    <div class='card-body'>
+					<form id="form" action="#" th:action="@{/gara/insert}" method="post" th:object="${garaInsertModel}" novalidate="novalidate">
+						<div class="form-row">
+							<div class="form-group col-md-3">
+								<label>Data</label>
+								<input type="date" class="form-control" th:field="*{data}" id="data" placeholder="Inserire la data" required>
+								<p style="color:red" th:if="${#fields.hasErrors('data')}" th:errors="*{data}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Punteggio</label>
+								<input type="number" class="form-control" th:field="*{punteggio}" id="punteggio" placeholder="Inserire il punteggio" required>
+								<p style="color:red" th:if="${#fields.hasErrors('punteggio')}" th:errors="*{punteggio}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>N° partecipanti</label>
+								<input type="number" class="form-control" th:field="*{numeroPartecipanti}" id="numeroPartecipanti" placeholder="Inserire il numero di partecipanti" required>
+								<p style="color:red" th:if="${#fields.hasErrors('numeroPartecipanti')}" th:errors="*{numeroPartecipanti}"></p>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Disciplina</label>
+								<select class="form-control" th:field="*{disciplinaDto}">
+									<option value="">Seleziona disciplina</option>
+    								<option th:each = "disciplina : ${listaDiscipline}" th:value="${disciplina.id}" th:text="${disciplina.nome}"></option>
+								</select>
+								<p style="color:red" th:if="${#fields.hasErrors('disciplinaDto')}" th:errors="*{disciplinaDto}"></p>
+							</div>
+						</div>
+						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-success">Crea gara!</button>
+					</form>
+			<!-- end card-body -->			   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>

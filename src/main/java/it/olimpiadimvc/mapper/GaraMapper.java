@@ -23,6 +23,7 @@ public class GaraMapper extends AbstractMapper<Gara, GaraDto>{
 		garaDto.setId(String.valueOf(entity.getId()));
 		garaDto.setData(String.valueOf(entity.getData()));
 		garaDto.setPunteggio(String.valueOf(entity.getPunteggio()));
+		garaDto.setNumeroPartecipanti(String.valueOf(entity.getNumeroPartecipanti()));
 		garaDto.setStato(String.valueOf(entity.getStato()));
 		garaDto.setDisciplinaDto(disciplinaMapper.convertEntityToDto(entity.getDisciplina()));
 		garaDto.setOrganizzatoreDto(utenteMapper.convertEntityToDto(entity.getOrganizzatore()));

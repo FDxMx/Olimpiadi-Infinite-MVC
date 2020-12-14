@@ -1,21 +1,18 @@
-package it.olimpiadimvc.dto;
+package it.olimpiadimvc.dto.messages;
 
-public class GaraDto {
+import javax.validation.constraints.NotEmpty;
+
+public class GaraInsertMessageDto {
 	
-	private String id;
 	private String data;
+	@NotEmpty(message = "PUNTEGGIO obbligatorio")
 	private String punteggio;
+	@NotEmpty(message = "NUMERO PARTECIPANTI obbligatorio")
 	private String numeroPartecipanti;
-	private String stato;
-	private DisciplinaDto disciplinaDto;
-	private UtenteDto organizzatoreDto;
+	@NotEmpty(message = "DISCIPLINA obbligatoria")
+	private String disciplinaDto;
+	private String organizzatoreDto;
 	
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
 	public String getData() {
 		return data;
 	}
@@ -28,22 +25,16 @@ public class GaraDto {
 	public void setPunteggio(String punteggio) {
 		this.punteggio = punteggio;
 	}
-	public String getStato() {
-		return stato;
-	}
-	public void setStato(String stato) {
-		this.stato = stato;
-	}
-	public DisciplinaDto getDisciplinaDto() {
+	public String getDisciplinaDto() {
 		return disciplinaDto;
 	}
-	public void setDisciplinaDto(DisciplinaDto disciplinaDto) {
+	public void setDisciplinaDto(String disciplinaDto) {
 		this.disciplinaDto = disciplinaDto;
 	}
-	public UtenteDto getOrganizzatoreDto() {
+	public String getOrganizzatoreDto() {
 		return organizzatoreDto;
 	}
-	public void setOrganizzatoreDto(UtenteDto organizzatoreDto) {
+	public void setOrganizzatoreDto(String organizzatoreDto) {
 		this.organizzatoreDto = organizzatoreDto;
 	}
 	public String getNumeroPartecipanti() {

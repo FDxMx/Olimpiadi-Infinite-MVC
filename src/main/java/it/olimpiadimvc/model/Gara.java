@@ -22,6 +22,7 @@ public class Gara {
 	private Integer id;
 	private LocalDate data;
 	private Integer punteggio;
+	private Integer numeroPartecipanti;
 	@Enumerated(EnumType.STRING)
 	private StatoGara stato;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -89,6 +90,14 @@ public class Gara {
 
 	public void setOrganizzatore(Utente organizzatore) {
 		this.organizzatore = organizzatore;
+	}
+
+	public Integer getNumeroPartecipanti() {
+		return numeroPartecipanti;
+	}
+
+	public void setNumeroPartecipanti(Integer numeroPartecipanti) {
+		this.numeroPartecipanti = numeroPartecipanti;
 	}
 	
 	
