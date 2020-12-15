@@ -4,7 +4,6 @@ public class NazioneDto {
 	
 	private String id;
 	private String nome;
-	private RappresentanteNazionaleDto rappresentanteNazionaleDto;
 	
 	public String getId() {
 		return id;
@@ -18,11 +17,4 @@ public class NazioneDto {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-	public RappresentanteNazionaleDto getRappresentanteNazionaleDto() {
-		return rappresentanteNazionaleDto;
-	}
-	public void setRappresentanteNazionaleDto(RappresentanteNazionaleDto rappresentanteNazionaleDto) {
-		this.rappresentanteNazionaleDto = rappresentanteNazionaleDto;
-	}
-	
 }

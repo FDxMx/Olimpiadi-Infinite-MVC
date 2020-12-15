@@ -35,7 +35,8 @@ public class Atleta {
 	@ManyToMany
 	@JoinTable(name = "atleta_gara", joinColumns = @JoinColumn(name = "atleta_fk", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "gara_fk", referencedColumnName = "id"))
 	private List<Gara> gare;
-	@ManyToMany(mappedBy = "atleti")
+	@ManyToMany
+	@JoinTable(name = "atleta_disciplina", joinColumns = @JoinColumn(name = "atleta_fk", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "disciplina_fk", referencedColumnName = "id"))
 	private List<Disciplina> discipline;
 	
 	public Atleta () {}

@@ -29,6 +29,14 @@ public class UtenteService implements UserDetailsService{
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	
+	public List<Utente> findAll(){
+		return utenteRepository.findAll();
+	}
+	
+	public Utente findByUsername(String username) {
+		return utenteRepository.findByUsername(username);
+	}
+	
 	public void registra(UtenteRegistrazioneMessageDto utenteRegistrazioneMessageDto) {
 		Utente utente = new Utente();
 		utente.setNome(utenteRegistrazioneMessageDto.getNome());

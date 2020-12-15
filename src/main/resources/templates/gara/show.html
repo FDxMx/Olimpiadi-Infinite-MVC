@@ -22,7 +22,9 @@
 		    <div class='card-header'>
 		        <h5>Dettagli gara</h5> 
 		    </div>
+		    
 		    <div class='card-body'>
+		    <a class="btn-lg btn-success" th:href="@{/gara/medagliere}">MEDAGLIERE</a>
 					<div class='table-responsive'>
 					<table class='table table-striped '>
 						<thead>
@@ -30,10 +32,11 @@
         						<th>ID</th>
        				 			<th>Data</th>
         						<th>Punteggio</th>
-        						<th>N° partecipanti</th>
+        						<th>N&deg; partecipanti</th>
         						<th>Stato</th>
         						<th>Disciplina</th>
         						<th>Organizzatore</th>
+        						<th>Azioni</th>
     						</tr>
 						</thead>
 						<tbody>
@@ -44,12 +47,16 @@
         						<td th:text="${garaShowModel.numeroPartecipanti}"></td>
         						<td th:text="${garaShowModel.stato}"></td>
         						<td th:text="${garaShowModel.disciplinaDto.nome}"></td>
-        						<td th:text="${garaShowModel.organizzatoreDto.nome}"></td>
+        						<td th:text="${garaShowModel.organizzatoreDto.nome + ' ' + garaShowModel.organizzatoreDto.cognome}"></td>
+        						<td><a class="btn  btn-sm btn-outline-success"
+									th:href="@{/gara/avvia/{garaId}(garaId=${garaShowModel.id})}">Avvia</a>
+								</td>
     						</tr>
 						</tbody>
 					</table>
 				</div>
 			<!-- end card-body -->
+			
 			&nbsp;
 			&nbsp;				
 			<h5>Partecipanti gara</h5>
@@ -75,7 +82,7 @@
         						<td th:text="${atleta.cognome}"></td>
         						<td th:text="${atleta.codiceFiscale}"></td>
         						<td th:text="${atleta.punti}"></td>
-        						<td th:text="${atleta.rappresentanteNazionale.nome}"></td>
+        						<td th:text="${atleta.rappresentanteNazionale.nome + ' ' + atleta.rappresentanteNazionale.cognome}"></td>
         						<td th:text="${atleta.stato}"></td>
         						<td><a class="btn  btn-sm btn-outline-secondary"
 									th:href="@{/gara/abilita-ritira/{atletaId}(atletaId=${atleta.id})}">Abilita/Ritira</a>

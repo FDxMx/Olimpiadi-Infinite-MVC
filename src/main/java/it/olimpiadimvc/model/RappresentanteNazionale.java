@@ -7,6 +7,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
@@ -19,7 +20,8 @@ public class RappresentanteNazionale {
 	private String nome;
 	private String cognome;
 	private String codiceFiscale;
-	@OneToOne(mappedBy = "rappresentanteNazionale")
+	@OneToOne
+	@JoinColumn(name = "nazione_fk", nullable = false)
 	private Nazione nazione;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rappresentanteNazionale", orphanRemoval = true)
 	private List<Atleta> atleti;

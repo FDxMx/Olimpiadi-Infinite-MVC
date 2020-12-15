@@ -25,7 +25,7 @@ public class GaraInsertValidator implements Validator{
 			try {
 				LocalDate.parse(garaInsertMessageDto.getData());
 			} catch (DateTimeParseException e) {
-				error.rejectValue("data", "", "Non hai selezionato una data");
+				error.rejectValue("data", "", "Non hai selezionato una data valida");
 			}
 		}
 		if(!StringUtils.isNumeric(garaInsertMessageDto.getNumeroPartecipanti()) || Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()) < 4 || Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()) > 8) {

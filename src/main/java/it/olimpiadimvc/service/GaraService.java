@@ -85,7 +85,11 @@ public class GaraService {
 		gara.setPunteggio(Integer.parseInt(garaInsertMessageDto.getPunteggio()));
 		gara.setNumeroPartecipanti(Integer.parseInt(garaInsertMessageDto.getNumeroPartecipanti()));
 		gara.setDisciplina(disciplinaRepository.findById(Integer.parseInt(garaInsertMessageDto.getDisciplinaDto())).get());
-		gara.setStato(StatoGara.CREATA);
+		if(garaInsertMessageDto.getData() != null && !garaInsertMessageDto.getData().equals("")) {
+			gara.setStato(StatoGara.IN_CALENDARIO);
+		}else {
+			gara.setStato(StatoGara.CREATA);
+		}
 		gara.setOrganizzatore(utenteRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName()));
 		garaRepository.save(gara);
 	}
@@ -97,6 +101,9 @@ public class GaraService {
 	public void update(GaraUpdateMessageDto garaUpdateMessageDto) {
 		Gara gara = garaRepository.findById(Integer.parseInt(garaUpdateMessageDto.getId())).get();
 		gara.setData(garaUpdateMessageDto.getData() != null && !garaUpdateMessageDto.getData().equals("") ? LocalDate.parse(garaUpdateMessageDto.getData()) : null);
+		if(garaUpdateMessageDto.getData() != null && !garaUpdateMessageDto.getData().equals("")) {
+			gara.setStato(StatoGara.IN_CALENDARIO);
+		}
 		gara.setPunteggio(Integer.parseInt(garaUpdateMessageDto.getPunteggio()));
 		gara.setNumeroPartecipanti(Integer.parseInt(garaUpdateMessageDto.getNumeroPartecipanti()));
 		garaRepository.save(gara);

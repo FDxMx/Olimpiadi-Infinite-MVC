@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<html lang="en" xmlns:th="https://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
   <head>
     <th:block th:replace ="fragments/header :: header" />
     <!-- Custom styles for this template -->
@@ -28,7 +28,8 @@
 	      <h1 style = "color: white" class="display-3">Benvenuto nelle<br> OLIMPIADI INFINITE MVC!</h1>
 	      &nbsp;
 		  &nbsp;
-	      <p><a class="btn btn-success btn-lg" th:href="@{/gara/list}" role="button">Gestione eventi &raquo;</a></p>
+	      <p><a sec:authorize = "hasAuthority('ORGANIZZATORE')" class="btn btn-success btn-lg" th:href="@{/gara/list}" role="button">Gestione eventi &raquo;</a></p>
+	   	  <p><a sec:authorize = "hasAuthority('ORGANIZZATORE')" class="btn btn-success btn-lg" th:href="@{/rappresentante/list}" role="button">Gestione rappresentanza &raquo;</a></p>
 	    </div>
 	</main>
 	<th:block th:replace ="fragments/footer :: footer" />

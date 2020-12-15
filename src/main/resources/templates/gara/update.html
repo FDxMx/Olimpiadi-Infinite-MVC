@@ -58,7 +58,7 @@
 								<p style="color:red" th:if="${#fields.hasErrors('punteggio')}" th:errors="*{punteggio}"></p>
 							</div>
 							<div class="form-group col-md-3">
-								<label>N° partecipanti</label>
+								<label>N&deg; partecipanti</label>
 								<input type="number" class="form-control" th:field="*{numeroPartecipanti}" id="numeroPartecipanti" th:value = "${garaUpdateModel.numeroPartecipanti}" placeholder="Inserire il numero di partecipanti" required>
 								<p style="color:red" th:if="${#fields.hasErrors('numeroPartecipanti')}" th:errors="*{numeroPartecipanti}"></p>
 							</div>

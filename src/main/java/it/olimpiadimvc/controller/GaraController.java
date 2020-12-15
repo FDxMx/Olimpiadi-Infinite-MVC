@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.olimpiadimvc.dto.GaraDto;
 import it.olimpiadimvc.dto.messages.GaraInsertMessageDto;
@@ -50,8 +51,8 @@ public class GaraController {
 	
 	@GetMapping("list")
     public String list(GaraSearchMessageDto garaSearchMessageDto, Model model) {
-		List<GaraDto> gare = garaService.findByExample(garaSearchMessageDto);
-		model.addAttribute("garaSearchModel", garaSearchMessageDto);
+        List<GaraDto> gare = garaService.findByExample(garaSearchMessageDto);
+    	model.addAttribute("garaSearchModel", garaSearchMessageDto);
         model.addAttribute("listaGare", gare);
         model.addAttribute("listaStati", StatoGara.listaEnum());
         model.addAttribute("listaDiscipline", disciplinaService.findAll());
@@ -67,7 +68,7 @@ public class GaraController {
 	}
 	
 	@PostMapping("insert")
-	public String insert(@Valid @ModelAttribute("garaInsertModel") GaraInsertMessageDto garaInsertMessageDto, BindingResult bindingResult, Model model) {
+	public String insert(@Valid @ModelAttribute("garaInsertModel") GaraInsertMessageDto garaInsertMessageDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		garaInsertValidator.validate(garaInsertMessageDto, bindingResult);
 		
@@ -76,6 +77,7 @@ public class GaraController {
             return "/gara/insert";
         } else {
             garaService.insert(garaInsertMessageDto);
+            redirectAttributes.addFlashAttribute("effettuato", "Inserimento effettuato con successo!");
             return "redirect:/gara/list";
         }
 	}
@@ -88,20 +90,20 @@ public class GaraController {
 	}
 	
 	@GetMapping("update/{id}")
-	public String update(@PathVariable Integer id, Model model) {
+	public String update(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		GaraDto garaDto =  garaService.findById(id);
 		if(!garaDto.getStato().equals("TERMINATA")) {
 			model.addAttribute("garaUpdateModel", garaDto);
 	    	return "/gara/update";
 		} else {
-			model.addAttribute("erroreGara", "La gara è terminata!");
+			redirectAttributes.addFlashAttribute("errore", "La gara è terminata!");
 			return "redirect:/gara/list";
 		}
 		
 	}
 	
 	@PostMapping("update/{id}")
-	public String update(@Valid @ModelAttribute("garaUpdateModel") GaraUpdateMessageDto garaUpdateMessageDto, BindingResult bindingResult, Model model) {
+	public String update(@Valid @ModelAttribute("garaUpdateModel") GaraUpdateMessageDto garaUpdateMessageDto, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes) {
 		
 		garaUpdateValidator.validate(garaUpdateMessageDto, bindingResult);
 		
@@ -109,25 +111,27 @@ public class GaraController {
             return "/gara/update";
         } else {
             garaService.update(garaUpdateMessageDto);
+            redirectAttributes.addFlashAttribute("effettuato", "Aggiornamento effettuato con successo!");
             return "redirect:/gara/list";
         }
 	}
 	
 	@GetMapping("delete/{id}")
-	public String delete(@PathVariable Integer id, Model model) {
+	public String delete(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		GaraDto garaDto =  garaService.findById(id);
 		if(!garaDto.getStato().equals("TERMINATA")) {
 			model.addAttribute("garaDeleteModelId", id);
 	    	return "/gara/delete";
 		}else {
-			model.addAttribute("erroreGara", "La gara è terminata!");
+			redirectAttributes.addFlashAttribute("errore", "La gara è terminata!");
 			return "redirect:/gara/list";
 		}
 	}
 	
 	@GetMapping("confermaDelete/{id}")
-    public String delete(@PathVariable Integer id) {
+    public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
     	garaService.delete(id);
+    	redirectAttributes.addFlashAttribute("effettuato", "Eliminazione effettuata con successo!");
     	return "redirect:/gara/list";
     }
 
