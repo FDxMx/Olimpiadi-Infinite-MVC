@@ -52,6 +52,7 @@
 			&nbsp;				
 			<h5>Rappresentanti Nazionali</h5>
 			<div class="alert alert-success" th:if = "${effettuato}" th:text="${effettuato}" role="alert"></div>
+			<div class="alert alert-danger" th:if = "${errore}" th:text="${errore}" role="alert"></div>
 			<a class="btn-sm btn-success" th:href="@{/rappresentante/insert}">Crea un rappresentante</a>
 				<div class='table-responsive'>
 					<table class='table table-striped '>

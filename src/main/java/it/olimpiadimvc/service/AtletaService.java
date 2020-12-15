@@ -23,5 +23,9 @@ public class AtletaService {
 		List<Atleta> atleti = atletaRepository.findAtletiByGara(idGara);
 		return atletaMapper.convertEntityToDto(atleti);
 	}
+	
+	public List<AtletaDto> findAtletiByRappresentante(Integer id){
+		return atletaRepository.findAtletiByRappresentante(id);
+	}
 
 }

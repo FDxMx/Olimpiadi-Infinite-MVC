@@ -75,5 +75,4 @@ public class RappresentanteNazionale {
 	public void setAtleti(List<Atleta> atleti) {
 		this.atleti = atleti;
 	}
-	
 }

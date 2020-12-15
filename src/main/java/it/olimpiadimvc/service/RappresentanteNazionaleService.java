@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import it.olimpiadimvc.dto.RappresentanteNazionaleDto;
 import it.olimpiadimvc.dto.messages.RappresentanteNazionaleInsertMessageDto;
 import it.olimpiadimvc.dto.messages.RappresentanteNazionaleSearchMessageDto;
+import it.olimpiadimvc.dto.messages.RappresentanteNazionaleUpdateMessageDto;
 import it.olimpiadimvc.mapper.RappresentanteNazionaleMapper;
 import it.olimpiadimvc.model.RappresentanteNazionale;
 import it.olimpiadimvc.model.Ruolo;
@@ -94,6 +95,22 @@ public class RappresentanteNazionaleService {
 		
 		rappresentanteNazionaleRepository.save(rappresentanteNazionale);
 		utenteRepository.save(utente);
+	}
+	
+	public RappresentanteNazionaleDto findById(Integer id) {
+		return rappresentanteNazionaleMapper.convertEntityToDto(rappresentanteNazionaleRepository.findById(id).get());
+	}
+	
+	public void update(RappresentanteNazionaleUpdateMessageDto rappresentanteNazionaleUpdateMessageDto) {
+		RappresentanteNazionale rappresentante = rappresentanteNazionaleRepository.findById(Integer.parseInt(rappresentanteNazionaleUpdateMessageDto.getId())).get();
+		rappresentante.setNome(rappresentanteNazionaleUpdateMessageDto.getNome());
+		rappresentante.setCognome(rappresentanteNazionaleUpdateMessageDto.getCognome());
+		rappresentante.setCodiceFiscale(rappresentanteNazionaleUpdateMessageDto.getCodiceFiscale());
+		rappresentanteNazionaleRepository.save(rappresentante);
+	}
+	
+	public void delete(Integer id) {
+		rappresentanteNazionaleRepository.deleteById(id);
 	}
 
 }

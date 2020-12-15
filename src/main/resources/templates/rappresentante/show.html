@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Dettagli Rappresentante</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+</head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+<body>
+	<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Dettagli Rappresentante Nazionale</h5> 
+		    </div>
+		    
+		    <div class='card-body'>
+					<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Nome</th>
+        						<th>Cognome</th>
+        						<th>Codice Fiscale</th>
+        						<th>Nazione</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr>
+        						<td th:text="${rappresentanteShowModel.id}"></td>
+        						<td th:text="${rappresentanteShowModel.nome}"></td>
+        						<td th:text="${rappresentanteShowModel.cognome}"></td>
+        						<td th:text="${rappresentanteShowModel.codiceFiscale}"></td>
+        						<td th:text="${rappresentanteShowModel.nazioneDto.nome}"></td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>
+			<!-- end card-body -->
+			
+			&nbsp;
+			&nbsp;				
+			<h5>Partecipanti gara</h5>
+			
+				<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Nome</th>
+        						<th>Cognome</th>
+        						<th>Codice Fiscale</th>
+        						<th>Punti</th>
+        						<th>Stato</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr th:each="atleta : ${listaAtleti}">
+        						<td th:text="${atleta.id}"></td>
+        						<td th:text="${atleta.nome}"></td>
+        						<td th:text="${atleta.cognome}"></td>
+        						<td th:text="${atleta.codiceFiscale}"></td>
+        						<td th:text="${atleta.punti}"></td>
+        						<td th:text="${atleta.stato}"></td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>
