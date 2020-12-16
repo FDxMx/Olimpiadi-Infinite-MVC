@@ -86,6 +86,7 @@ public class RappresentanteNazionaleController {
 	@GetMapping("update/{id}")
 	public String update(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
 		model.addAttribute("rappresentanteUpdateModel", rappresentanteNazionaleService.findById(id));
+		model.addAttribute("listaNazioni", nazioneService.findAll());
 	    return "/rappresentante/update";
 	}
 	
@@ -95,6 +96,7 @@ public class RappresentanteNazionaleController {
 		rappresentanteNazionaleUpdateValidator.validate(rappresentanteNazionaleUpdateMessageDto, bindingResult);
 		
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("listaNazioni", nazioneService.findAll());
             return "/rappresentante/update";
         } else {
             rappresentanteNazionaleService.update(rappresentanteNazionaleUpdateMessageDto);

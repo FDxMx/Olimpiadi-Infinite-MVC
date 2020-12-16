@@ -2,6 +2,7 @@ package it.olimpiadimvc.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class Atleta {
@@ -28,7 +30,7 @@ public class Atleta {
 	private Integer medaglieArgento;
 	private Integer medaglieOro;
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "rappresentanteNazionale_fk", nullable = true)
+	@JoinColumn(name = "rappresentanteNazionale_fk", nullable = false)
 	private RappresentanteNazionale rappresentanteNazionale;
 	@Enumerated(EnumType.STRING)
 	private StatoAtleta stato;
@@ -38,6 +40,9 @@ public class Atleta {
 	@ManyToMany
 	@JoinTable(name = "atleta_disciplina", joinColumns = @JoinColumn(name = "atleta_fk", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "disciplina_fk", referencedColumnName = "id"))
 	private List<Disciplina> discipline;
+	@OneToOne(cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "utente_fk", nullable = false)
+	private Utente utente;
 	
 	public Atleta () {}
 
@@ -136,7 +141,13 @@ public class Atleta {
 	public void setDiscipline(List<Disciplina> discipline) {
 		this.discipline = discipline;
 	}
-	
-	
 
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+	
 }

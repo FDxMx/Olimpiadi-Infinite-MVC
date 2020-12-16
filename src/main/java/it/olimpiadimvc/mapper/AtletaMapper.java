@@ -19,6 +19,7 @@ public class AtletaMapper extends AbstractMapper<Atleta, AtletaDto>{
 		}
 		AtletaDto atletaDto = new AtletaDto();
 		atletaDto.setId(String.valueOf(entity.getId()));
+		atletaDto.setNome(String.valueOf(entity.getNome()));
 		atletaDto.setCognome(entity.getCognome());
 		atletaDto.setCodiceFiscale(entity.getCodiceFiscale());
 		atletaDto.setPunti(String.valueOf(entity.getPunti()));

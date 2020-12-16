@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Dettagli Atleta</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+</head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+<body>
+	<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Dettagli atleta</h5> 
+		    </div>
+		    
+		    <div class='card-body'>
+					<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Nome</th>
+        						<th>Cognome</th>
+        						<th>Cod. Fiscale</th>
+        						<th>Punti</th>
+        						<th>Bronzo</th>
+        						<th>Argento</th>
+        						<th>Oro</th>
+        						<th>Stato</th>
+        						<th>Rappresentante</th>
+       						 	<th>Azioni</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr>
+        						<td th:text="${atletaShowModel.id}"></td>
+        						<td th:text="${atletaShowModel.nome}"></td>
+        						<td th:text="${atletaShowModel.cognome}"></td>
+        						<td th:text="${atletaShowModel.codiceFiscale}"></td>
+        						<td th:text="${atletaShowModel.punti}"></td>
+        						<td th:text="${atletaShowModel.medaglieBronzo}"></td>
+        						<td th:text="${atletaShowModel.medaglieArgento}"></td>
+        						<td th:text="${atletaShowModel.medaglieOro}"></td>
+        						<td th:text="${atletaShowModel.stato}"></td>
+        						<td th:text="${atletaShowModel.rappresentanteNazionaleDto.nome + ' ' + atletaShowModel.rappresentanteNazionaleDto.cognome}"></td>
+        						<td><a class="btn  btn-sm btn-outline-danger"
+									th:href="@{/atleta/show/{atletaId}(atletaId=${atletaShowModel.id})}">Ritira</a>
+								</td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>
+			<!-- end card-body -->
+			
+			&nbsp;
+			&nbsp;				
+			<h5>Gare atleta</h5>
+			
+				<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Data</th>
+        						<th>Punteggio</th>
+        						<th>N&deg; partecipanti</th>
+        						<th>Stato</th>
+        						<th>Disciplina</th>
+        						<th>Organizzatore</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr th:each="gara : ${listaGare}">
+        						<td th:text="${gara.id}"></td>
+        						<td th:text="${gara.data}"></td>
+        						<td th:text="${gara.punteggio}"></td>
+        						<td th:text="${gara.numeroPartecipanti}"></td>
+        						<td th:text="${gara.stato}"></td>
+        						<td th:text="${gara.disciplinaDto.nome}"></td>
+        						<td th:text="${gara.organizzatoreDto.nome + ' ' + gara.organizzatoreDto.cognome}"></td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>

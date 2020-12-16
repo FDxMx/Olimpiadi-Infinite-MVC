@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import it.olimpiadimvc.dto.RappresentanteNazionaleDto;
+import it.olimpiadimvc.dto.UtenteDto;
 import it.olimpiadimvc.dto.messages.RappresentanteNazionaleUpdateMessageDto;
-import it.olimpiadimvc.model.Utente;
 import it.olimpiadimvc.service.RappresentanteNazionaleService;
 import it.olimpiadimvc.service.UtenteService;
 
@@ -28,10 +28,16 @@ public class RappresentanteNazionaleUpdateValidator implements Validator{
 	@Override
 	public void validate(Object arg0, Errors error) {
 		RappresentanteNazionaleUpdateMessageDto rappresentanteNazionaleUpdateMessageDto = (RappresentanteNazionaleUpdateMessageDto) arg0;
-		for (Utente utente : utenteService.findAll()) {
+		for (UtenteDto utente : utenteService.findAll()) {
 			RappresentanteNazionaleDto rappresentante = rappresentanteNazionaleService.findById(Integer.parseInt(rappresentanteNazionaleUpdateMessageDto.getId()));
 			if(utente.getCodiceFiscale().equals(rappresentanteNazionaleUpdateMessageDto.getCodiceFiscale()) && !rappresentanteNazionaleUpdateMessageDto.getCodiceFiscale().equals(rappresentante.getCodiceFiscale())) {
 				error.rejectValue("codiceFiscale", "", "Esiste già un utente con questo codice fiscale!");
+			}
+		}
+		for (RappresentanteNazionaleDto rappresentante : rappresentanteNazionaleService.findAll()) {
+			RappresentanteNazionaleDto rappresentanteNazionale = rappresentanteNazionaleService.findById(Integer.parseInt(rappresentanteNazionaleUpdateMessageDto.getId()));
+			if(rappresentante.getNazioneDto().getId().equals(rappresentanteNazionaleUpdateMessageDto.getNazioneDto().getId()) && !rappresentanteNazionaleUpdateMessageDto.getNazioneDto().getId().equals(rappresentanteNazionale.getNazioneDto().getId())) {
+				error.rejectValue("nazioneDto", "", "Esiste già un rappresentante per questa nazione!");
 			}
 		}
 	}

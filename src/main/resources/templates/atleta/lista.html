@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
+<head>
+	<th:block th:replace ="fragments/header :: header" />
+	<title>Cerca Atleta</title>
+	<!-- style per le pagine diverse dalla index -->
+    <link th:href="@{/css/global.css}" rel="stylesheet">
+</head>
+<style>
+	   html,body{
+       background-image: url('');
+	   background-size: cover;
+	   background-repeat: no-repeat;
+	   height: 100%;
+	   font-family: 'Numans', sans-serif;
+	   }
+	  </style>
+<body>
+	<th:block th:replace ="fragments/navbar :: navbar" />
+	<main role="main" class="container">
+		<div class='card'>
+		    <div class='card-header'>
+		        <h5>Cerca una atleta</h5> 
+		    </div>
+		    <div class='card-body'>
+					<form id="form" action="#" th:action="@{/atleta/list}" th:object="${atletaSearchModel}" novalidate="novalidate">
+						<div class="form-row">
+							<div class="form-group col-md-6">
+								<label>Nome</label>
+								<input type="text" th:field="*{nome}" id="nome" class="form-control" placeholder="Inserire il nome" required>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Cognome</label>
+								<input type="text" class="form-control" th:field="*{cognome}" id="cognome" placeholder="Inserire il cognome" required>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Codice Fiscale</label>
+								<input type="text" class="form-control" th:field="*{codiceFiscale}" id="codiceFiscale" placeholder="Inserire il codice fiscale" required>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Stato</label>
+								<select class="form-control" th:field="*{stato}">
+									<option value="">Seleziona stato</option>
+    								<option th:each = "stato : ${listaStati}" th:value="${stato}" th:text="${stato}"></option>
+								</select>
+							</div>
+							<div class="form-group col-md-3">
+								<label>Rappresentante</label>
+								<select class="form-control" th:field="*{rappresentanteNazionaleDto}">
+									<option value="">Seleziona rappresentante</option>
+    								<option th:each = "rappresentante : ${listaRappresentanti}" th:value="${rappresentante.id}" th:text="${rappresentante.nome + ' ' + rappresentante.cognome}"></option>
+								</select>
+							</div>
+						</div>
+						<button type="submit" name="submit" value="submit" id="submit" class="btn btn-success">Cerca!</button>
+					</form>
+			<!-- end card-body -->
+			&nbsp;
+			&nbsp;				
+			<h5>Atleti</h5>
+			<div class="alert alert-success" th:if = "${effettuato}" th:text="${effettuato}" role="alert"></div>
+			<div class="alert alert-danger" th:if = "${errore}" th:text="${errore}" role="alert"></div>
+			<a class="btn-sm btn-success" th:href="@{/atleta/insert}">Crea un atleta</a>
+				<div class='table-responsive'>
+					<table class='table table-striped '>
+						<thead>
+							<tr>
+        						<th>Id</th>
+       				 			<th>Nome</th>
+        						<th>Cognome</th>
+        						<th>Cod. Fiscale</th>
+        						<th>Punti</th>
+        						<th>Bronzo</th>
+        						<th>Argento</th>
+        						<th>Oro</th>
+        						<th>Stato</th>
+        						<th>Rappresentante</th>
+       						 	<th>Azioni</th>
+    						</tr>
+						</thead>
+						<tbody>
+							<tr th:each="atleta : ${listaAtleti}">
+        						<td th:text="${atleta.id}"></td>
+        						<td th:text="${atleta.nome}"></td>
+        						<td th:text="${atleta.cognome}"></td>
+        						<td th:text="${atleta.codiceFiscale}"></td>
+        						<td th:text="${atleta.punti}"></td>
+        						<td th:text="${atleta.medaglieBronzo}"></td>
+        						<td th:text="${atleta.medaglieArgento}"></td>
+        						<td th:text="${atleta.medaglieOro}"></td>
+        						<td th:text="${atleta.stato}"></td>
+        						<td th:text="${atleta.rappresentanteNazionaleDto.nome + ' ' + atleta.rappresentanteNazionaleDto.cognome}"></td>
+        						<td><a class="btn  btn-sm btn-outline-secondary"
+									th:href="@{/atleta/show/{atletaId}(atletaId=${atleta.id})}">Dettagli</a>
+									<a class="btn  btn-sm btn-outline-primary ml-2 mr-2"
+									th:href="@{/atleta/update/{atletaId}(atletaId=${atleta.id})}">Aggiorna</a>
+									<a class="btn btn-outline-danger btn-sm"
+									th:href="@{/atleta/delete/{atletaId}(atletaId=${atleta.id})}">Ritira</a>
+								</td>
+    						</tr>
+						</tbody>
+					</table>
+				</div>   
+		    </div>
+		</div>	
+	<!-- end container -->	
+	</main>
+	<th:block th:replace ="fragments/footer :: footer" />
+</body>
+</html>

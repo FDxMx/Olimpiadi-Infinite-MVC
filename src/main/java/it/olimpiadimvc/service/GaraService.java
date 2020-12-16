@@ -104,6 +104,9 @@ public class GaraService {
 		if(garaUpdateMessageDto.getData() != null && !garaUpdateMessageDto.getData().equals("")) {
 			gara.setStato(StatoGara.IN_CALENDARIO);
 		}
+		if(garaUpdateMessageDto.getData() == null || garaUpdateMessageDto.getData().equals("")) {
+			gara.setStato(StatoGara.CREATA);
+		}
 		gara.setPunteggio(Integer.parseInt(garaUpdateMessageDto.getPunteggio()));
 		gara.setNumeroPartecipanti(Integer.parseInt(garaUpdateMessageDto.getNumeroPartecipanti()));
 		garaRepository.save(gara);
@@ -111,6 +114,10 @@ public class GaraService {
 	
 	public void delete(Integer id) {
 		garaRepository.deleteById(id);
+	}
+	
+	public List<GaraDto> findGareByAtleta(Integer id){
+		return garaMapper.convertEntityToDto(garaRepository.findGareByAtleta(id));
 	}
 
 }

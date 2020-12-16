@@ -30,6 +30,7 @@
 		  &nbsp;
 	      <p><a sec:authorize = "hasAuthority('ORGANIZZATORE')" class="btn btn-success btn-lg" th:href="@{/gara/list}" role="button">Gestione eventi &raquo;</a></p>
 	   	  <p><a sec:authorize = "hasAuthority('ORGANIZZATORE')" class="btn btn-success btn-lg" th:href="@{/rappresentante/list}" role="button">Gestione rappresentanza &raquo;</a></p>
+	      <p><a sec:authorize = "hasAuthority('RAPPRESENTANTE_NAZIONALE')" class="btn btn-success btn-lg" th:href="@{/atleta/list}" role="button">Gestione rappresentanza &raquo;</a></p>
 	    </div>
 	</main>
 	<th:block th:replace ="fragments/footer :: footer" />

@@ -22,8 +22,13 @@ public class NazioneMapper extends AbstractMapper<Nazione, NazioneDto>{
 
 	@Override
 	public Nazione convertDtoToEntity(NazioneDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (dto == null) {
+			return null;
+		}
+		Nazione nazione = new Nazione();
+		nazione.setId(Integer.parseInt(dto.getId()));
+		nazione.setNome(dto.getNome());
+		return nazione;
 	}
 
 }

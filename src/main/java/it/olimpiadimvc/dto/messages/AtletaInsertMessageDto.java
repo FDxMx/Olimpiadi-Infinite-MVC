@@ -2,18 +2,18 @@ package it.olimpiadimvc.dto.messages;
 
 import javax.validation.constraints.NotEmpty;
 
-import it.olimpiadimvc.dto.NazioneDto;
-
-public class RappresentanteNazionaleUpdateMessageDto {
+public class AtletaInsertMessageDto {
 	
-	private String id;
 	@NotEmpty(message = "NOME obbligatorio")
 	private String nome;
 	@NotEmpty(message = "COGNOME obbligatorio")
 	private String cognome;
 	@NotEmpty(message = "CODICE FISCALE obbligatorio")
 	private String codiceFiscale;
-	private NazioneDto nazioneDto;
+	@NotEmpty(message = "USERANAME obbligatorio")
+	private String username;
+	@NotEmpty(message = "PASSWORD obbligatoria")
+	private String password;
 	
 	public String getNome() {
 		return nome;
@@ -33,17 +33,17 @@ public class RappresentanteNazionaleUpdateMessageDto {
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
-	public String getId() {
-		return id;
+	public String getUsername() {
+		return username;
 	}
-	public void setId(String id) {
-		this.id = id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public NazioneDto getNazioneDto() {
-		return nazioneDto;
+	public String getPassword() {
+		return password;
 	}
-	public void setNazioneDto(NazioneDto nazioneDto) {
-		this.nazioneDto = nazioneDto;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 }

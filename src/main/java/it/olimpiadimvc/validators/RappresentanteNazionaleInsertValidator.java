@@ -6,8 +6,8 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 import it.olimpiadimvc.dto.RappresentanteNazionaleDto;
+import it.olimpiadimvc.dto.UtenteDto;
 import it.olimpiadimvc.dto.messages.RappresentanteNazionaleInsertMessageDto;
-import it.olimpiadimvc.model.Utente;
 import it.olimpiadimvc.service.RappresentanteNazionaleService;
 import it.olimpiadimvc.service.UtenteService;
 
@@ -33,7 +33,7 @@ public class RappresentanteNazionaleInsertValidator implements Validator{
 				error.rejectValue("nazioneDto", "", "Esiste già un rappresentante per questa nazione!");
 			}
 		}
-		for (Utente utente : utenteService.findAll()) {
+		for (UtenteDto utente : utenteService.findAll()) {
 			if(utente.getCodiceFiscale().equals(rappresentanteNazionaleInsertMessageDto.getCodiceFiscale())) {
 				error.rejectValue("codiceFiscale", "", "Esiste già un utente con questo codice fiscale!");
 			}

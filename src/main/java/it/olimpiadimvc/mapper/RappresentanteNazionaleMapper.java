@@ -28,8 +28,16 @@ public class RappresentanteNazionaleMapper extends AbstractMapper<Rappresentante
 
 	@Override
 	public RappresentanteNazionale convertDtoToEntity(RappresentanteNazionaleDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		if (dto == null) {
+			return null;
+		}
+		RappresentanteNazionale rappresentanteNazionale = new RappresentanteNazionale();
+		rappresentanteNazionale.setId(Integer.parseInt(dto.getId()));
+		rappresentanteNazionale.setNome(dto.getNome());
+		rappresentanteNazionale.setCognome(dto.getCognome());
+		rappresentanteNazionale.setCodiceFiscale(dto.getCodiceFiscale());
+		rappresentanteNazionale.setNazione(nazioneMapper.convertDtoToEntity(dto.getNazioneDto()));
+		return rappresentanteNazionale;
 	}
 
 }

@@ -29,12 +29,12 @@ public class UtenteService implements UserDetailsService{
 	@Autowired
     private PasswordEncoder passwordEncoder;
 	
-	public List<Utente> findAll(){
-		return utenteRepository.findAll();
+	public List<UtenteDto> findAll(){
+		return utenteMapper.convertEntityToDto(utenteRepository.findAll());
 	}
 	
-	public Utente findByUsername(String username) {
-		return utenteRepository.findByUsername(username);
+	public UtenteDto findByUsername(String username) {
+		return utenteMapper.convertEntityToDto(utenteRepository.findByUsername(username));
 	}
 	
 	public void registra(UtenteRegistrazioneMessageDto utenteRegistrazioneMessageDto) {

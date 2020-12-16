@@ -2,6 +2,7 @@ package it.olimpiadimvc.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -25,6 +26,9 @@ public class RappresentanteNazionale {
 	private Nazione nazione;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "rappresentanteNazionale", orphanRemoval = true)
 	private List<Atleta> atleti;
+	@OneToOne(cascade = {CascadeType.REMOVE})
+	@JoinColumn(name = "utente_fk", nullable = false)
+	private Utente utente;
 	
 	public RappresentanteNazionale () {}
 
@@ -75,4 +79,13 @@ public class RappresentanteNazionale {
 	public void setAtleti(List<Atleta> atleti) {
 		this.atleti = atleti;
 	}
+
+	public Utente getUtente() {
+		return utente;
+	}
+
+	public void setUtente(Utente utente) {
+		this.utente = utente;
+	}
+	
 }

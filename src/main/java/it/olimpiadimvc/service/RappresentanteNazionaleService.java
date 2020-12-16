@@ -93,12 +93,17 @@ public class RappresentanteNazionaleService {
 		utente.setPassword(passwordEncoder.encode(rappresentanteNazionaleInsertMessageDto.getPassword()));
 		utente.setRuolo(Ruolo.RAPPRESENTANTE_NAZIONALE);
 		
-		rappresentanteNazionaleRepository.save(rappresentanteNazionale);
 		utenteRepository.save(utente);
+		rappresentanteNazionale.setUtente(utente);
+		rappresentanteNazionaleRepository.save(rappresentanteNazionale);
 	}
 	
 	public RappresentanteNazionaleDto findById(Integer id) {
 		return rappresentanteNazionaleMapper.convertEntityToDto(rappresentanteNazionaleRepository.findById(id).get());
+	}
+	
+	public RappresentanteNazionaleDto findRappresentanteByUtente(Integer id) {
+		return rappresentanteNazionaleMapper.convertEntityToDto(rappresentanteNazionaleRepository.findRappresentanteByUtente(id));
 	}
 	
 	public void update(RappresentanteNazionaleUpdateMessageDto rappresentanteNazionaleUpdateMessageDto) {
@@ -106,7 +111,15 @@ public class RappresentanteNazionaleService {
 		rappresentante.setNome(rappresentanteNazionaleUpdateMessageDto.getNome());
 		rappresentante.setCognome(rappresentanteNazionaleUpdateMessageDto.getCognome());
 		rappresentante.setCodiceFiscale(rappresentanteNazionaleUpdateMessageDto.getCodiceFiscale());
+		rappresentante.setNazione(nazioneService.findById(Integer.parseInt(rappresentanteNazionaleUpdateMessageDto.getNazioneDto().getId())));
+		
+		Utente utente = utenteRepository.findById(rappresentante.getUtente().getId()).get();
+		utente.setNome(rappresentanteNazionaleUpdateMessageDto.getNome());
+		utente.setCognome(rappresentanteNazionaleUpdateMessageDto.getCognome());
+		utente.setCodiceFiscale(rappresentanteNazionaleUpdateMessageDto.getCodiceFiscale());
+		
 		rappresentanteNazionaleRepository.save(rappresentante);
+		utenteRepository.save(utente);
 	}
 	
 	public void delete(Integer id) {
