@@ -50,7 +50,7 @@
 			
 			&nbsp;
 			&nbsp;				
-			<h5>Partecipanti gara</h5>
+			<h5>Atleti del rappresentante</h5>
 			
 				<div class='table-responsive'>
 					<table class='table table-striped '>
@@ -61,6 +61,9 @@
         						<th>Cognome</th>
         						<th>Codice Fiscale</th>
         						<th>Punti</th>
+        						<th>Bronzo</th>
+        						<th>Argento</th>
+        						<th>Oro</th>
         						<th>Stato</th>
     						</tr>
 						</thead>
@@ -71,6 +74,9 @@
         						<td th:text="${atleta.cognome}"></td>
         						<td th:text="${atleta.codiceFiscale}"></td>
         						<td th:text="${atleta.punti}"></td>
+        						<td th:text="${atleta.medaglieBronzo}"></td>
+        						<td th:text="${atleta.medaglieArgento}"></td>
+        						<td th:text="${atleta.medaglieOro}"></td>
         						<td th:text="${atleta.stato}"></td>
     						</tr>
 						</tbody>

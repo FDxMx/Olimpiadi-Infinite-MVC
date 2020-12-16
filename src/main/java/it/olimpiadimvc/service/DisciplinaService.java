@@ -23,5 +23,9 @@ public class DisciplinaService {
 		List<Disciplina> discipline = disciplinaRepository.findAll();
 		return disciplinaMapper.convertEntityToDto(discipline);
 	}
+	
+	public DisciplinaDto findById(Integer id) {
+		return disciplinaMapper.convertEntityToDto(disciplinaRepository.findById(id).get());
+	}
 
 }

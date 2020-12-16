@@ -21,8 +21,10 @@ public class DisciplinaMapper extends AbstractMapper<Disciplina, DisciplinaDto>{
 
 	@Override
 	public Disciplina convertDtoToEntity(DisciplinaDto dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Disciplina disciplina = new Disciplina();
+		disciplina.setId(Integer.parseInt(dto.getId()));
+		disciplina.setNome(dto.getNome());
+		return disciplina;
 	}
 
 }

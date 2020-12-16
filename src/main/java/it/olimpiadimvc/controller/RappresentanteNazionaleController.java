@@ -84,7 +84,7 @@ public class RappresentanteNazionaleController {
 	}
 	
 	@GetMapping("update/{id}")
-	public String update(@PathVariable Integer id, Model model, RedirectAttributes redirectAttributes) {
+	public String update(@PathVariable Integer id, Model model) {
 		model.addAttribute("rappresentanteUpdateModel", rappresentanteNazionaleService.findById(id));
 		model.addAttribute("listaNazioni", nazioneService.findAll());
 	    return "/rappresentante/update";

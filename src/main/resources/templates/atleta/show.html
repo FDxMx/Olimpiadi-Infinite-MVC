@@ -54,7 +54,7 @@
         						<td th:text="${atletaShowModel.stato}"></td>
         						<td th:text="${atletaShowModel.rappresentanteNazionaleDto.nome + ' ' + atletaShowModel.rappresentanteNazionaleDto.cognome}"></td>
         						<td><a class="btn  btn-sm btn-outline-danger"
-									th:href="@{/atleta/show/{atletaId}(atletaId=${atletaShowModel.id})}">Ritira</a>
+									th:href="@{/atleta/ritira/{atletaId}(atletaId=${atletaShowModel.id})}">Ritira</a>
 								</td>
     						</tr>
 						</tbody>

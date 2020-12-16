@@ -1,5 +1,7 @@
 package it.olimpiadimvc.dto;
 
+import java.util.List;
+
 public class AtletaDto {
 	
 	private String id;
@@ -12,6 +14,7 @@ public class AtletaDto {
 	private String medaglieOro;
 	private RappresentanteNazionaleDto rappresentanteNazionaleDto;
 	private String stato;
+	private List<DisciplinaDto> disciplineDto;
 	
 	public String getId() {
 		return id;
@@ -72,6 +75,12 @@ public class AtletaDto {
 	}
 	public void setRappresentanteNazionaleDto(RappresentanteNazionaleDto rappresentanteNazionaleDto) {
 		this.rappresentanteNazionaleDto = rappresentanteNazionaleDto;
+	}
+	public List<DisciplinaDto> getDisciplineDto() {
+		return disciplineDto;
+	}
+	public void setDisciplineDto(List<DisciplinaDto> disciplineDto) {
+		this.disciplineDto = disciplineDto;
 	}
 	
 }

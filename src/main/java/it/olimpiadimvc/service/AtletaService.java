@@ -17,9 +17,12 @@ import org.springframework.stereotype.Service;
 import it.olimpiadimvc.dto.AtletaDto;
 import it.olimpiadimvc.dto.messages.AtletaInsertMessageDto;
 import it.olimpiadimvc.dto.messages.AtletaSearchMessageDto;
+import it.olimpiadimvc.dto.messages.AtletaUpdateMessageDto;
 import it.olimpiadimvc.mapper.AtletaMapper;
+import it.olimpiadimvc.mapper.DisciplinaMapper;
 import it.olimpiadimvc.mapper.RappresentanteNazionaleMapper;
 import it.olimpiadimvc.model.Atleta;
+import it.olimpiadimvc.model.Disciplina;
 import it.olimpiadimvc.model.Ruolo;
 import it.olimpiadimvc.model.StatoAtleta;
 import it.olimpiadimvc.model.Utente;
@@ -49,6 +52,12 @@ public class AtletaService {
 	
 	@Autowired
 	private RappresentanteNazionaleMapper rappresentanteNazionaleMapper;
+	
+	@Autowired
+	private DisciplinaService disciplinaService;
+	
+	@Autowired
+	private DisciplinaMapper disciplinaMapper;
 	
 	public List<AtletaDto> findAtletiByGara(Integer idGara){
 		List<Atleta> atleti = atletaRepository.findAtletiByGara(idGara);
@@ -100,6 +109,11 @@ public class AtletaService {
 		atleta.setNome(atletaInsertMessageDto.getNome());
 		atleta.setCognome(atletaInsertMessageDto.getCognome());
 		atleta.setCodiceFiscale(atletaInsertMessageDto.getCodiceFiscale());
+		List<Disciplina> discipline = new ArrayList<>();
+		for (String idDisciplina : atletaInsertMessageDto.getDisciplineDto()) {
+			discipline.add(disciplinaMapper.convertDtoToEntity(disciplinaService.findById(Integer.parseInt(idDisciplina))));
+		}
+		atleta.setDiscipline(discipline);
 		
 		Utente utente = new Utente();
 		utente.setNome(atletaInsertMessageDto.getNome());
@@ -113,6 +127,32 @@ public class AtletaService {
 		atleta.setUtente(utente);
 		Utente utenteSession = utenteRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName());
 		atleta.setRappresentanteNazionale(rappresentanteNazionaleMapper.convertDtoToEntity(rappresentanteNazionaleService.findRappresentanteByUtente(utenteSession.getId())));
+		atletaRepository.save(atleta);
+	}
+	
+	public void update(AtletaUpdateMessageDto atletaUpdateMessageDto) {
+		Atleta atleta = atletaRepository.findById(Integer.parseInt(atletaUpdateMessageDto.getId())).get();
+		atleta.setNome(atletaUpdateMessageDto.getNome());
+		atleta.setCognome(atletaUpdateMessageDto.getCognome());
+		atleta.setCodiceFiscale(atletaUpdateMessageDto.getCodiceFiscale());
+		List<Disciplina> discipline = new ArrayList<>();
+		for (String idDisciplina : atletaUpdateMessageDto.getDisciplineDto()) {
+			discipline.add(disciplinaMapper.convertDtoToEntity(disciplinaService.findById(Integer.parseInt(idDisciplina))));
+		}
+		atleta.setDiscipline(discipline);
+		
+		Utente utente = utenteRepository.findById(atleta.getUtente().getId()).get();
+		utente.setNome(atletaUpdateMessageDto.getNome());
+		utente.setCognome(atletaUpdateMessageDto.getCognome());
+		utente.setCodiceFiscale(atletaUpdateMessageDto.getCodiceFiscale());
+		
+		atletaRepository.save(atleta);
+		utenteRepository.save(utente);
+	}
+	
+	public void ritira(Integer id) {
+		Atleta atleta = atletaRepository.findById(id).get();
+		atleta.setStato(StatoAtleta.RITIRATO);
 		atletaRepository.save(atleta);
 	}
 

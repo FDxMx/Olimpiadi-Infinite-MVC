@@ -4,19 +4,15 @@ import java.util.List;
 
 import javax.validation.constraints.NotEmpty;
 
-public class AtletaInsertMessageDto {
+public class AtletaUpdateMessageDto {
 	
+	private String id;
 	@NotEmpty(message = "NOME obbligatorio")
 	private String nome;
 	@NotEmpty(message = "COGNOME obbligatorio")
 	private String cognome;
 	@NotEmpty(message = "CODICE FISCALE obbligatorio")
 	private String codiceFiscale;
-	@NotEmpty(message = "USERANAME obbligatorio")
-	private String username;
-	@NotEmpty(message = "PASSWORD obbligatoria")
-	private String password;
-	@NotEmpty(message = "DISCIPLINA obbligatoria")
 	private List<String> disciplineDto;
 	
 	public String getNome() {
@@ -37,23 +33,17 @@ public class AtletaInsertMessageDto {
 	public void setCodiceFiscale(String codiceFiscale) {
 		this.codiceFiscale = codiceFiscale;
 	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
 	public List<String> getDisciplineDto() {
 		return disciplineDto;
 	}
 	public void setDisciplineDto(List<String> disciplineDto) {
 		this.disciplineDto = disciplineDto;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
 	}
 	
 }
